@@ -5,7 +5,8 @@
   "main": "src/apps.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=local node src/app"
+    "start": "NODE_ENV=local node src/app",
+    "start:pro": "NODE_ENV=pro node src/app"
   },
   "author": "David García",
   "license": "ISC",
