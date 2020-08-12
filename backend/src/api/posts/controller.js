@@ -1,77 +1,51 @@
-const { loadModel, Op, paginator } = require(__dirname + '/../../models');
+const { loadModel } = require(__dirname + '/../../models');
 const Post = loadModel('Post');
-const PostTag = loadModel('PostTag');
-const Tag = loadModel('PostTag');
 
-module.exports.get = async function(req) {
-    try {
-        const slug = req.params.slug;
-        const post = await Post.get({ slug });
-        if (post === null) {
-            req.response({ code: 404 });
-        } else {
-            req.response({ data: post });
-        }
-    } catch (error) {
-        req.error({ error });
-    }
-};
-
-module.exports.del = async function(req) {
+module.exports.get = async (req) => {
     try {
         const id = req.params.postId;
-        let post = await Post.findOne({ where: { id } });
-        if (post === null) {
-            req.response({ code: 404 });
-        } else {
-            post = post.toJSON();
-            await PostTag.destroy({ where: { PostId: post.id }});
-            await Post.destroy({ where: { id: post.id }});
-            req.response({ code: 202 });
-        }
+        const post = await Post.getBySlugOrId({ IdOrSlug: id });
+        req.response({ data: post });
     } catch (error) {
         req.error({ error });
     }
 };
 
-module.exports.list = async function (req, res) {
+module.exports.del = async (req) => {
     try {
-        const options = paginator({
-            query: req.query,
-            filterFields: ['category']
-        });
-        const { docs, pages, total } = await Post.paginate(options);
-        const data = { total, pages, data: docs };
+        const id = parseInt(req.params.postId);
+        await Post.deletePost({ id });
+        req.response({ code: 202 });
+    } catch (error) {
+        req.error({ error });
+    }
+};
+
+module.exports.list = async (req) => {
+    try {
+        const data = await Post.listPost({ query: req.query });
         req.response(data);
     } catch (error) {
         req.error({ error });
     }
 };
 
-module.exports.put = async function(req) {
+module.exports.put = async (req) => {
     try {
-        const slug = req.params.slug;
+        const id = parseInt(req.params.postId);
         const data = req.body;
-        let old = await Post.findOne({ where: { slug }});
-        if (old !== null) {
-            old = old.toJSON();
-            const oldTags = (await PostTag.findAll({ where: { id: old.id }})).map((item) => (item.toJSON()));
-            const tags = data.tags || [];
-            const remove = oldTags.filter((item) => tags.includes(item.name));
-            const post = await Post.update(data, { where: { slug } });
-            req.response({ data: post, code: 202 });
-        } else {
-            req.response({ code: 404 });
-        }
+        const post = await Post.updatePost({ data, id });
+        req.response({ data: post, code: 202 });
     } catch (error) {
         req.error({ error });
     }
 };
 
-module.exports.post = async function(req) {
+module.exports.post = async (req) => {
     try {
         const data = req.body;
-        data.UserId = req.user.id;
+        data.UserId = 1;
+            //req.user.id;
         const post = await Post.addPost({ data });
         req.response({ data: post, code: 201 });
     } catch (error) {

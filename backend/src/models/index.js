@@ -90,7 +90,7 @@ function doPaginator({ query, pageSize = 25 }) {
 function paginator ({ query, filterFields = [], attributes = [], pageSize = 25, searchFields = [], where = {} }) {
     const options = {
         page: parseInt(query.paginationKey || query.page || 1),
-        paginate: parseInt(query.pageSize || pageSize),
+        paginate: parseInt(query.pageSize || query.size || pageSize),
         order: [],
         where
     };

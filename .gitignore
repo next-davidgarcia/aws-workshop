@@ -1,5 +1,6 @@
 .idea
 backend/node_modules
 frontend/node_modules
+ssr/node_modules
 backend/log
 frontend/log

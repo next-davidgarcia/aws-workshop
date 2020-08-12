@@ -1,5 +1,5 @@
-- Proyecto backend
-    - API NodeJS
+- Proyecto backend (backend)
+    - API NodeJS 
     - La config está en backend/env Crear .env.pro
     - Añadir nginx y hacer proxy al puerto elegido y configurar PM2
         - https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04
@@ -11,7 +11,7 @@
     - Para ejecutar en producción
         ```
         npm start:pro
-- Proyecto frontend
+- Proyecto frontend (/frontend)
     - Opción 1 (compleja): NodeJS
         - La config está en frontend/env Crear .env.pro
         - Añadir nginx y hacer proxy al puerto elegido y configurar PM2
@@ -28,3 +28,4 @@
         - Añadir apache a script de arranque
             ```
             sudo update-rc.d apache2 defaults
+- Proyecto front ssr (/ssr)

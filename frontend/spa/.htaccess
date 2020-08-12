@@ -1,9 +1,5 @@
 <IfModule mod_rewrite.c>
 RewriteEngine on
-#RewriteCond %{HTTPS} off
-#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
-#RewriteCond %{HTTP_HOST} !^www\.indonesiaentusmanos\.org [NC]
-#RewriteRule ^(.*)$ https://www.indonesiaentusmanos.org/$1 [R=301,L]
 RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
