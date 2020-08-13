@@ -1,7 +1,7 @@
 # Next AWS HandsOn
 
 
-##Proyecto backend (backend)
+## Proyecto backend (backend)
 
 - API NodeJS 
 - La config está en backend/env Crear .env.pro
@@ -17,7 +17,7 @@
     ```
     npm start:pro
 
-##Proyecto frontend (/frontend)
+## Proyecto frontend (/frontend)
 
 - Reemplazar en el archivo /frontend/spa/_nuxt/2bb52aa466136bd4b286.js http://localhost:3500 por la url del servidor backend
 - Copiar el contenido de la carpeta spa a /var/www/html/
@@ -25,7 +25,7 @@
     ```
         sudo update-rc.d apache2 defaults
             
-##Proyecto front ssr (/ssr)
+## Proyecto front ssr (/ssr)
 
 Nos sirve para construir el dist del proyecto frontend.
 
