@@ -23,13 +23,19 @@
             ...mapGetters(['logged']),
         },
         async asyncData ({ params }) {
-            const date = new Date().toLocaleTimeString();
-            const post = await api.getPost(params.id);
-            return {
-                date,
-                post,
-                title: `${ post.title }`,
-                description: `${ post.description }`,
+            try {
+                const post = await api.getPost(params.id);
+                return {
+                    post,
+                    title: `${ post.title }`,
+                    description: `${ post.description }`,
+                };
+            } catch (e) {
+                return {
+                    post: false,
+                    title: 'Error',
+                    description: 'Error',
+                };
             }
         },
         head () {

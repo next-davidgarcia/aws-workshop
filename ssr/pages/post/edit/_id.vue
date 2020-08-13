@@ -18,12 +18,21 @@
         components: {
             EditPost,
         },
+        middleware: 'auth',
         async asyncData ({ params }) {
-            const post = (params.id === '_new') ? {} : await api.getPost(params.id);
-            return {
-                post,
-                title: post.title || 'Nuevo Post',
-                description: post.description ? post.description : 'Nuevo post',
+            try {
+                const post = (params.id === '_new') ? { tags: [] } : await api.getPost(params.id);
+                return {
+                    post,
+                    title: post.title || 'Nuevo Post',
+                    description: post.description ? post.description : 'Nuevo post',
+                }
+            } catch (e) {
+                return {
+                    post: false,
+                    title: 'Error',
+                    description: 'Error',
+                };
             }
         },
         head () {

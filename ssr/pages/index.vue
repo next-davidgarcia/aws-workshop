@@ -22,12 +22,10 @@
 </style>
 <script>
     import { mapGetters, mapActions } from 'vuex';
-    import ShowClientDate from '~/components/ShowClientDate.vue';
     import PostList from '~/components/PostList.vue';
     import api from '~/lib/api';
     export default {
         components: {
-            ShowClientDate,
             PostList,
         },
         data() {
@@ -44,20 +42,35 @@
         methods: {
             ...mapActions(['loading', 'alert']),
             async morePosts() {
-                this.page++;
-                const page = this.page;
-                const { posts, pages, total } = await api.getPosts(page);
-                this.pages = pages;
-                this.total = total;
-                this.posts.push(...posts);
+                try {
+                    this.loading(true);
+                    this.page++;
+                    const page = this.page;
+                    const { posts, pages, total } = await api.getPosts(page);
+                    this.pages = pages;
+                    this.total = total;
+                    this.posts.push(...posts);
+                } catch (e) {
+                    this.alert('Error obteniendo posts');
+                } finally {
+                    this.loading(false);
+                }
             },
         },
         async asyncData ({ params }) {
-            const { posts, pages, total } = await api.getPosts();
-            return {
-                posts,
-                pages,
-                total,
+            try {
+                const { posts, pages, total } = await api.getPosts();
+                return {
+                    posts,
+                    pages,
+                    total,
+                }
+            } catch (e) {
+                return {
+                    title: 'Error',
+                    description: 'Error',
+                    posts: [],
+                };
             }
         },
         head() {

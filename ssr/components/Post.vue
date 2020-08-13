@@ -8,7 +8,7 @@
             <v-list-item>
                 <v-list-item-content>
                     <v-list-item-title class="headline">{{ post.title }}</v-list-item-title>
-                    <v-list-item-subtitle>{{ post.description }}</v-list-item-subtitle>
+                    <v-list-item-subtitle class="mt-5 mb-5">{{ post.description }}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
 
@@ -17,7 +17,11 @@
                     :src="post.image"
                     max-height="300"
             ></v-img>
-
+            <v-card-text v-if="post && post.tags">
+                <v-chip v-for="tag in post.tags" class="ma-2" color="primary" :key="tag">
+                    {{ tag }}
+                </v-chip>
+            </v-card-text>
             <v-card-text v-html="post.text"></v-card-text>
 
             <v-card-actions v-if="editable">

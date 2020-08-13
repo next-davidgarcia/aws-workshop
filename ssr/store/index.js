@@ -11,22 +11,21 @@ export const state = () => ({
     token: null,
 });
 
-function logout({ commit }, { req, res }) {
+function logout({ commit }, back = {}) {
     const VueCookies = process.client ? require('vue-cookies') : undefined;
     commit('user', null);
     commit('token', null);
     commit('logged', false);
-    if (req !== undefined) {
+    if (back.req !== undefined) {
         // TODO borrar cookiesss
     } else if (VueCookies !== undefined) {
         VueCookies.remove('token');
         VueCookies.remove('user');
-    } else {
-        console.log('Not init');
     }
 }
 
-function init({ commit, state }, { req, res }) {
+function init({ commit, state }, back = {}) {
+    const { req, res } = back;
     if (state.started === false) {
         commit('started', true);
         if (state.forceLogged !== true) {
@@ -58,7 +57,6 @@ function loadCredentials({ req }) {
     const VueCookies = process.client ? require('vue-cookies') : undefined;
     const cookieparser = process.server ? require('cookieparser') : undefined;
     const notLogged = { user: null, token: null };
-    console.log('Cargando credenciales');
     if (req !== undefined) {
         if (req.headers !== undefined && req.headers.cookie !== undefined) {
             const parsed = cookieparser.parse(req.headers.cookie);
@@ -66,7 +64,6 @@ function loadCredentials({ req }) {
                 try {
                     const user = JSON.parse(parsed.user);
                     const token = parsed.token;
-                    console.log('Cargados datos de server', user, token);
                     return { user, token };
                 } catch (err) {
                     return notLogged;
@@ -76,10 +73,7 @@ function loadCredentials({ req }) {
     } else if (VueCookies !== undefined) {
         const user = VueCookies.get('user') || null;
         const token = VueCookies.get('token') || null;
-        console.log('Cargados datos de cliente');
         return { user, token };
-    } else {
-        console.log('Not init');
     }
     return notLogged;
 }

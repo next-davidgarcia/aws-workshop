@@ -18,7 +18,7 @@
               </v-avatar>
             </template>
             <v-card>
-              <v-list v-if="logged">
+              <v-list v-if="logged === true">
                 <v-list-item>
                   <v-list-item-content v-if="user">
                     <v-list-item-title>{{ user.name }} {{ user.surmane }}</v-list-item-title>
@@ -31,17 +31,15 @@
                   </v-list-item-action>
                 </v-list-item>
               </v-list>
-              <v-form v-else>
-                <v-text-field
-                        label="E-mail"
-                        type="email"
-                ></v-text-field>
-                <v-text-field
-                        label="Password"
-                        type="password"
-                ></v-text-field>
-                <v-btn @click="fb">fake login</v-btn>
-              </v-form>
+              <v-list v-if="logged === false">
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-btn to="/login" nuxt>
+                      Acceder
+                    </v-btn>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
             </v-card>
           </v-menu>
         </v-container>
@@ -75,6 +73,7 @@
   #appWrapper {
     margin-top: 70px;
     margin-bottom: 70px;
+    min-height: 100%;
   }
 
 </style>
@@ -82,11 +81,13 @@
     import logo from '@/assets/next.png';
     import Loading from '@/components/Loading.vue';
     import Alert from '@/components/Alert.vue';
+    import LoginScreen from '@/components/LoginScreen.vue';
     import { mapGetters, mapActions } from 'vuex';
     export default {
         components: {
             Loading,
             Alert,
+            LoginScreen,
         },
         data() {
             return {

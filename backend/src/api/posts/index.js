@@ -8,7 +8,7 @@ const path = apiPrefix + 'posts/';
 module.exports = (router) => {
     router.get(path + ':postId', controller.get);
     router.get(path, controller.list);
-    router.post(path, controller.post);
-    router.put(path + ':postId', controller.put);
-    router.delete(path + ':postId', controller.del);
+    router.post(path, logged, controller.post);
+    router.put(path + ':postId', logged, controller.put);
+    router.delete(path + ':postId', logged, controller.del);
 };

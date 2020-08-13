@@ -22,6 +22,16 @@
                     label="Imagen (url)"
                     required
             ></v-text-field>
+                <v-combobox multiple
+                    v-model="post.tags"
+                    label="Tags (añade con intro)"
+                    append-icon
+                    chips
+                    deletable-chips
+                    class="tag-input"
+                    :search-input.sync="search"
+                    @keyup.tab="updateTags"
+                    @paste="updateTags"/>
             <client-only>
                 <wysiwyg id="editorHtml" v-model="post.text" />
             </client-only>
@@ -70,10 +80,22 @@
             imageRules: [
                 v => !!v || 'Imagen obligatoria'
             ],
+            newTags: [],
+            search: '',
         }),
-
+        tags() {
+            return [...this.post.tags, ...this.newTags];
+        },
         methods: {
-            ...mapActions(['loading', 'alert']),
+            ...mapActions(['loading', 'alert', 'logout']),
+            updateTags() {
+                this.$nextTick(() => {
+                    this.post.tags.push(...this.search.split(','));
+                    this.$nextTick(() => {
+                        this.search = '';
+                    });
+                });
+            },
             async save () {
                 if(this.$refs.form.validate()) {
                     try {
@@ -85,6 +107,10 @@
                         this.alert('Post guardado correctamente');
                     } catch (e) {
                         this.alert(e.message);
+                        if (e.code === 401) {
+                            this.logout();
+                            this.$router.push({ path: '/login' });
+                        }
                     } finally {
                         this.loading(false);
                     }
