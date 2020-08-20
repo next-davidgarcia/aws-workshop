@@ -1,10 +1,11 @@
 # Next AWS HandsOn
 
+Proyecto desarrollado con fines formativos por BBVA Next Technologies México. No está pensando para ser puesto en producción.
 
 ## Proyecto backend (backend)
 
 - API NodeJS 
-- La config está en backend/env Crear .env.pro
+- La config está en backend/env Crear .env.pro con los datos adecuados
 - Añadir nginx y hacer proxy al puerto elegido y configurar PM2 o forever
     - https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04
 - Para instalar en producción:
@@ -28,6 +29,12 @@
 ## Proyecto front ssr (/ssr)
 
 Nos sirve para construir el dist del proyecto frontend.
+
+- Costruir el build
+- @TODO hacer la parte de testing
+- @TODO hacer el buildspec.yml para CodeBuild
+    ```
+        npm run build
 
 # Datos de Prueba
 
