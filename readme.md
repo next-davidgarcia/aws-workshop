@@ -5,7 +5,7 @@
 
 - API NodeJS 
 - La config está en backend/env Crear .env.pro
-- Añadir nginx y hacer proxy al puerto elegido y configurar PM2
+- Añadir nginx y hacer proxy al puerto elegido y configurar PM2 o forever
     - https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-16-04
 - Para instalar en producción:
     ```
