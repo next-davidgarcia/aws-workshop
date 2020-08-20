@@ -44,8 +44,7 @@ module.exports.put = async (req) => {
 module.exports.post = async (req) => {
     try {
         const data = req.body;
-        data.UserId = 1;
-            //req.user.id;
+        data.UserId = req.user.id;
         const post = await Post.addPost({ data });
         req.response({ data: post, code: 201 });
     } catch (error) {
