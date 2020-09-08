@@ -112,7 +112,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-auth-api/
+my_env/
 
 # Spyder project settings
 .spyderproject

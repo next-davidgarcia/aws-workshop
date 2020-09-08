@@ -9,9 +9,9 @@ from passlib.context import CryptContext
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from auth import crud, models, schemas
-from auth.schemas import User
-from auth.database import SessionLocal, engine
+from api import crud, models, schemas
+from api.schemas import User
+from api.database import SessionLocal, engine
 
 # to get a string like this run:
 # openssl rand -hex 32
