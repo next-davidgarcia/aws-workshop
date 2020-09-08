@@ -15,7 +15,7 @@ from api.database import SessionLocal, engine
 
 # to get a string like this run:
 # openssl rand -hex 32
-SECRET_KEY = ""
+SECRET_KEY = "81a7afc34230c4869d9cb21a3d90a67c9093952b3222e7b5df4563ebbcd2083b"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
