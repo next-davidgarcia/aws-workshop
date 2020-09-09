@@ -40,6 +40,7 @@ app = FastAPI()
 origins = [
     "http://localhost:3000",
     "http://localhost:3001",
+    "*"
 ]
 
 app.add_middleware(
@@ -108,7 +109,7 @@ async def get_current_active_user(current_user: schemas.User = Depends(get_curre
     return current_user
 
 
-@app.post("/token", response_model=Token)
+@app.post("/blognext/api/v1/auth/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
@@ -125,6 +126,6 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer", "user": user}
 
 
-@app.get("/users/me/", response_model=schemas.User)
+@app.get("/blognext/api/v1/auth/me/", response_model=schemas.User)
 async def read_users_me(current_user: schemas.User = Depends(get_current_active_user)):
     return current_user
