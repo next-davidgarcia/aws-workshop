@@ -28,12 +28,13 @@ module.exports = (sequelize, DataTypes) => {
 
     Post.getBySlugOrId = async ({ IdOrSlug }) => {
         const { loadModel } = require(__dirname + '/../models');
-        const PostTag = loadModel('PostTag');
+        // const PostTag = loadModel('PostTag');
         const where = isNaN(IdOrSlug) ? { slug: IdOrSlug } : { id: parseInt(IdOrSlug) };
         const data = await Post.findOne({ where });
         if (data !== null) {
             const post = data.toJSON();
-            post.tags = (await PostTag.getPostTags({ PostId: post.id })).map(({ name }) => name);
+            //comment in order to use tags-microservice
+            // post.tags = (await PostTag.getPostTags({ PostId: post.id })).map(({ name }) => name);
             return post;
         } else {
             throw CustomError('Not found', 404);
@@ -92,7 +93,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Post.listPost = async ({ query, filterFields = [] }) => {
         const { paginator, loadModel } = require(__dirname + '/../models');
-        const PostTag = loadModel('PostTag');
+        // const PostTag = loadModel('PostTag');
         const options = paginator({
             query,
             filterFields,
@@ -101,7 +102,8 @@ module.exports = (sequelize, DataTypes) => {
         const data = { total, pages, data: [] };
         for (let i = 0; i < docs.length; i++) {
             const post = docs[i].toJSON();
-            post.tags = (await PostTag.getPostTags({ PostId: post.id })).map(({ name }) => name);
+            //comentar para obtener los tags del microservicio
+            // post.tags = (await PostTag.getPostTags({ PostId: post.id })).map(({ name }) => name);
             data.data.push(post);
         }
         return data;

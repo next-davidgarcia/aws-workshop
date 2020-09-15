@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const SECRET = '81a7afc34230c4869d9cb21a3d90a67c9093952b3222e7b5df4563ebbcd2083b';
-const SECONDS = 1800;
+const SECONDS = 3600;
 
 function getToken({ user }) {
     return jwt.sign({
@@ -20,9 +20,7 @@ async function init(req, res, next) {
         
         if (authorization !== undefined && authorization.startsWith('Bearer ')) {
             const token = authorization.replace('Bearer ', '');
-            
             const info = jwt.verify(token, SECRET);
-            
             req.user = info;
         }
         

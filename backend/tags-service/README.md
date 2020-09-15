@@ -7,29 +7,21 @@
 
 # PRE-REQUISITES
 * Go compiler equals or greater than 1.14 version
-* Clone aws-workshop git repository:
-    ```bash
-    $ git clone git@github.com:next-crisantojeronimo/aws-workshop.git
-    ```
+
 * Internet conecction to access and download labraries/dependencies:
-    - go get -u github.com/gorilla/mux  
-    - go get -u github.com/jinzhu/gorm  
-    - go get -u github.com/go-sql-driver/mysql
-* Setup DB connection environment variables:
-    ```bash
-    $ export GO_APP_DB_USR=
-    $ export GO_APP_DB_PASSWD=
-    $ export GO_APP_DB_HOST=
-    $ export GO_APP_DB_PORT=
-    $ export GO_APP_DB_SCHEME=
+    - go mod vendor
+* Setup DB connection environment variables in .env file:
+    ```.env
+    GO_APP_DB_USR=
+    GO_APP_DB_PASSWD=
+    GO_APP_DB_HOST=
+    GO_APP_DB_PORT=
+    GO_APP_DB_SCHEME=
     ```
 
 # CREATE PROJECT
 * Create tags-service folder in aws-workshop/backend and move to it
-* Initialize the module:
-    ```bash
-    go mod init github.com/next-crisantojeronimo/aws-workshop/backend/tags-service
-    ```
+
 * Create the following project structure:
     tags-service
     |
@@ -69,17 +61,3 @@
     ```bash
     go run .
     ```
-
-#### Run with Container
-    ```bash
-    docker build .
-    docker run -d 
-    ```
-
-
-
-    https://medium.com/@hugo.bjarred/rest-api-with-golang-mux-mysql-c5915347fa5b
-
-    https://medium.com/@sergio_aja/rest-api-crud-con-go-6f072b672c0d
-
-    https://www.soberkoder.com/go-rest-api-mysql-gorm/

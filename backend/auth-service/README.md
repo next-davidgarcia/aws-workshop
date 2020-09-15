@@ -11,14 +11,6 @@ source my_env/bin/activate
 pip install -r requirements.txt
 ```
 
-## Configuration
-
-The service scans environment variables for:
-- `REDIS_HOST` - host of Redis
-- `REDIS_PORT` - port of Redis
-- `REDIS_CHANNEL` - channel the processor is going to listen to
-
-
 ## Building
 
 Use the FASTAPI framework.

@@ -1,5 +1,8 @@
 import axios from 'axios';
-const baseURL = process.env.API_URL;
+import FormData from 'form-data';
+// const monolithURL = process.env.API_URL;
+const authURL = process.env.AUTH_API_URL;
+const postsURL = process.env.POSTS_API_URL;
 
 function getHeaders() {
 
@@ -13,6 +16,15 @@ async function request({
     if (VueCookies !== undefined) {
         token = VueCookies.get('token') || null;
     }
+
+    let baseURL;
+    if(url.search('token') > 0) {
+        baseURL = authURL
+    } else {
+        // baseURL = monolithURL
+        baseURL = postsURL
+    }
+
     const config = {
         url,
         method,
@@ -25,11 +37,21 @@ async function request({
     if (token !== null) {
         config.headers.Authorization = `Bearer ${ token }`;
     }
-    if (data !== false) {
+    if (data !== false && url == "/token") {
+        const ndata = new FormData();
+        ndata.append('username', data.email);
+        ndata.append('password', data.password);
+        config.data = ndata;
+    } else if (data !== false) {
         config.data = data;
     }
     try {
         const result = await axios.request(config);
+
+        if(result.data.Content) {
+            return result
+        }
+
         return result.data;
     } catch (e) {
         if (e.response !== undefined && e.response.status === 401) {
@@ -73,8 +95,15 @@ export default {
         return data;
     },
     login: async ({ email, password }) => {
-        const url = `/auth/login`;
-        const { data } = await request({ url, method: 'POST', data: { email, password } });
+        /* const url = `/auth/login`;
+        const { data } = await request({ url, method: 'POST', data: { email, password } }); */
+
+        const url = `/token`;
+        const { access_token, user } = await request({ url, method: 'POST', data: { email, password } });
+        const data = {
+            "token": access_token,
+            "user": user
+        }
         return data;
     },
     register: async ({ email, password, name, surname }) => {
