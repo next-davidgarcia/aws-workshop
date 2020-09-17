@@ -17,7 +17,7 @@ exports.handler = async (event) => {
     const request = event.Records[0].cf.request;
     const headers = request.headers;
 
-    /* Check for session-id in request cookie in viewer-request event,
+    /* Check for authentication in request cookie in viewer-request event,
      * if session-id is absent, redirect the user to sign in page with original
      * request sent as redirect_url in query params.
      */
@@ -28,12 +28,22 @@ exports.handler = async (event) => {
         return request;
     }
 
+    if (headers['cloudfront-viewer-country']) {
+
+    }
+
+
     /* URI encode the original request to be sent as redirect_url in query params */
     const encodedRedirectUrl = encodeURIComponent(`https://${headers.host[0].value}${request.uri}?${request.querystring}`);
+    const countryCode = headers['cloudfront-viewer-country'][0].value;
     return {
         status: '302',
         statusDescription: 'Found',
         headers: {
+            country: [{
+                key: 'Country',
+                value: countryCode,
+            }],
             location: [{
                 key: 'Location',
                 value: `https://www.bbva.com?redirect_url=${encodedRedirectUrl}`,
