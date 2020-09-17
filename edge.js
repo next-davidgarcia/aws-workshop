@@ -24,14 +24,9 @@ exports.handler = async (event) => {
 
     /* Check for session-id in cookie, if present then proceed with request */
     const parsedCookies = parseCookies(headers);
-    if (parsedCookies && parsedCookies['authentication']) {
+    if (parsedCookies && parsedCookies['authorization']) {
         return request;
     }
-
-    if (headers['cloudfront-viewer-country']) {
-
-    }
-
 
     /* URI encode the original request to be sent as redirect_url in query params */
     const encodedRedirectUrl = encodeURIComponent(`https://${headers.host[0].value}${request.uri}?${request.querystring}`);
