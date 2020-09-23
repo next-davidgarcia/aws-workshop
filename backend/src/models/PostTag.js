@@ -44,7 +44,10 @@ module.exports = (sequelize, DataTypes) => {
             where: { PostId },
             include: [{ model: Tag }],
         });
-        return data.map((item) => {
+        return data.filter((item) => {
+            const res = item.toJSON();
+            return (res.Tag !== null);
+        }).map((item) => {
            const res = item.toJSON();
            return { name: res.Tag.name, id: res.TagId };
         });
