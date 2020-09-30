@@ -63,7 +63,7 @@ export default {
         return data;
     },
     updatePost: async ({ post }) => {
-        const url = `/posts/${ post.id }`;
+        const url = `/posts/${ post.slug }`;
         const { data } = await request({ url, method: 'PUT', data: post });
         return data;
     },
@@ -79,7 +79,7 @@ export default {
     },
     register: async ({ email, password, name, surname }) => {
         const url = `/auth/`;
-        const { data } = await request({ url, method: 'POST', data: { email, password, name, surname } });
+        const { data } = await request({ url, method: 'POST', data: { email, password, name, middle_name: surname } });
         return data;
     },
 };

@@ -26,7 +26,7 @@
 
             <v-card-actions v-if="editable">
                 <v-spacer></v-spacer>
-                <v-btn icon :to="`/post/edit/${ post.id }`" nuxt>
+                <v-btn icon :to="`/post/edit/${ post.slug }`" nuxt>
                     <v-icon>mdi-lead-pencil</v-icon>
                 </v-btn>
             </v-card-actions>

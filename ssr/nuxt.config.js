@@ -18,7 +18,9 @@ module.exports = {
   router: {
       middleware: 'init'
   },
-
+  server: {
+      port: 8000, // default: 3000
+  },
   /*
   ** Customize the progress-bar color
   */

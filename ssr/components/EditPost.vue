@@ -42,7 +42,7 @@
         <v-btn color="blue" class="mr-4" to="/" nuxt>
             Volver
         </v-btn>
-        <v-btn color="red" class="mr-4" @click="remove" v-if="post.id">
+        <v-btn color="red" class="mr-4" @click="remove" v-if="post.slug">
             Borrar
         </v-btn>
     </v-row>
@@ -90,19 +90,23 @@
             ...mapActions(['loading', 'alert', 'logout']),
             updateTags() {
                 this.$nextTick(() => {
-                    this.post.tags.push(...this.search.split(','));
-                    this.$nextTick(() => {
-                        this.search = '';
-                    });
+                    try {
+                        this.post.tags.push(...this.search.split(','));
+                        this.$nextTick(() => {
+                            this.search = '';
+                        });
+                    } catch (e) {
+
+                    }
                 });
             },
             async save () {
                 if(this.$refs.form.validate()) {
                     try {
                         this.loading(true);
-                        const fn = this.post.id === undefined ? api.createPost : api.updatePost;
+                        const fn = this.post.slug === undefined ? api.createPost : api.updatePost;
                         const data = await fn({ post: this.post });
-                        this.post.id = data.id;
+                        this.post.slug = data.slug;
                         this.$forceUpdate();
                         this.alert('Post guardado correctamente');
                     } catch (e) {
@@ -129,7 +133,7 @@
             async deletePost() {
                 try {
                     this.loading(true);
-                    await api.deletePost({ id: this.post.id });
+                    await api.deletePost({ id: this.post.slug });
                     this.alert('Post borrado correctamente');
                     this.$router.push({ path: '/' });
                 } catch (e) {
