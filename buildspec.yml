@@ -11,8 +11,6 @@ phases:
     - ls -la
     - cd ssr
     - pwd
-    - echo ///// $DEPLOY_ENV //////
-    - echo Installing source NPM dependencies...
     - npm install
   build:
     commands:
@@ -20,6 +18,7 @@ phases:
     # SIGUIENTE LÍNEA NO TOCAR, CONSTRUYE APLICACIÓN EN CARPETA dist
     - pwd
     - echo "API_URL=$API_URL" > .env
+    - cat .env
     - npm run spa
   post_build:
     commands:
