@@ -12,7 +12,7 @@
     "generate": "NODE_ENV=development nuxt generate",
     "spa": "NODE_ENV=development nuxt generate --spa",
     "remove:dev": "AWS_SDK_LOAD_CONFIG=true AWS_PROFILE=demo serverless remove --stage dev",
-    "deploy:local": "AWS_SDK_LOAD_CONFIG=true AWS_PROFILE=demo sls deploy --stage dev",
+    "deploy:local": "AWS_SDK_LOAD_CONFIG=true AWS_PROFILE=demo sls deploy --stage dev"
   },
   "dependencies": {
     "@nuxtjs/dotenv": "^1.4.1",
