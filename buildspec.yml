@@ -18,8 +18,6 @@ phases:
     commands:
     # AQUÍ PASAR TEST, ETC.
     # SIGUIENTE LÍNEA NO TOCAR, CONSTRUYE APLICACIÓN EN CARPETA dist
-    - echo 'Build'
-    - cd ssr
     - pwd
     - echo "API_URL=$API_URL" > .env
     - npm run spa
