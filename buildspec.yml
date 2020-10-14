@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+  pre_build:
+    commands:
+    # NO TOCAR ESTA FASE
+    - cd ssr
+    - pwd
+    - echo ///// $DEPLOY_ENV //////
+    - echo Installing source NPM dependencies...
+    - npm install
+  build:
+    commands:
+    # AQUÍ PASAR TEST, ETC.
+    # SIGUIENTE LÍNEA NO TOCAR, CONSTRUYE APLICACIÓN EN CARPETA dist
+    - echo 'Build'
+    - cd ssr
+    - pwd
+    - echo "API_URL=$API_URL" > .env
+    - npm run spa
+  post_build:
+    commands:
+    # NO TOCAR ESTA FASE
+    - echo Build completed on `date`
+artifacts:
+  files:
+  - '**/*'
+  base-directory: ssr/dist

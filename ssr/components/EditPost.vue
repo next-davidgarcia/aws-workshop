@@ -90,13 +90,11 @@
             ...mapActions(['loading', 'alert', 'logout']),
             updateTags() {
                 this.$nextTick(() => {
-                    try {
+                    if (this.post && Array.isArray(this.post.tags)) {
                         this.post.tags.push(...this.search.split(','));
                         this.$nextTick(() => {
                             this.search = '';
                         });
-                    } catch (e) {
-
                     }
                 });
             },
