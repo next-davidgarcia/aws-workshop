@@ -12,7 +12,7 @@
     "generate": "NODE_ENV=development nuxt generate",
     "spa": "NODE_ENV=development nuxt generate --spa",
     "remove:dev": "AWS_SDK_LOAD_CONFIG=true AWS_PROFILE=demo serverless remove --stage dev",
-    "deploy:local": "AWS_SDK_LOAD_CONFIG=true AWS_PROFILE=demo sls deploy --stage dev"
+    "deploy:local": "AWS_SDK_LOAD_CONFIG=true AWS_PROFILE=demo sls deploy --stage dev",
   },
   "dependencies": {
     "@nuxtjs/dotenv": "^1.4.1",
@@ -24,9 +24,11 @@
     "serverless-http": "github:thuisbioscoop/serverless-http",
     "vue-client-only": "^2.0.0",
     "vue-cookies": "^1.7.3",
-    "vue-wysiwyg": "^1.7.2"
+    "vue-wysiwyg": "^1.7.2",
+    "vue": "2.6.12"
   },
   "devDependencies": {
+    "vue-server-renderer": "2.6.12",
     "@nuxtjs/vuetify": "latest",
     "nodemon": "^1.18.9",
     "nuxt": "latest",
