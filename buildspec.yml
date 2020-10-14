@@ -7,6 +7,8 @@ phases:
   pre_build:
     commands:
     # NO TOCAR ESTA FASE
+    - pwd
+    - ls -la
     - cd ssr
     - pwd
     - echo ///// $DEPLOY_ENV //////
