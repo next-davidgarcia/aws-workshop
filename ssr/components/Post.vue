@@ -24,11 +24,18 @@
             </v-card-text>
             <v-card-text v-html="post.text"></v-card-text>
 
-            <v-card-actions v-if="editable">
+            <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn icon :to="`/post/edit/${ post.slug }`" nuxt>
+                <v-btn icon @click="read()">
+                    <v-icon>mdi-motion-play</v-icon>
+                </v-btn>
+                <v-btn icon @click="analyze()">
+                    <v-icon>mdi-api</v-icon>
+                </v-btn>
+                <v-btn  v-if="editable" icon :to="`/post/edit/${ post.slug }`" nuxt>
                     <v-icon>mdi-lead-pencil</v-icon>
                 </v-btn>
+                <audio v-if="sound !== false" ref="audioPlayer"><source :src="sound" type="audio/mpeg"></audio>
             </v-card-actions>
         </v-card>
     </div>
@@ -48,7 +55,34 @@
     }
 </style>
 <script>
-  export default {
+    import api from '~/lib/api';
+    import { mapActions } from 'vuex';
+
+
+    export default {
     props: ['post', 'editable'],
+    data() {
+      return {
+          sound: false,
+      };
+    },
+    methods: {
+        ...mapActions(['alert']),
+        async read() {
+            const { url } = await api.readPost(this.post.slug);
+            this.sound = url;
+            this.play();
+        },
+        async analyze() {
+            const data = await api.analyzePost(this.post.slug);
+            this.alert({ message: `El texto es de sentimiento ${ data.Sentiment }`, title: 'Analisis del texto' });
+        },
+        play() {
+            const self = this;
+            setTimeout(() => {
+                self.$refs.audioPlayer.play();
+            }, 300);
+        },
+    }
   }
 </script>

@@ -57,6 +57,16 @@ export default {
         const { data } = await request({ url });
         return data;
     },
+    readPost: async (slug) => {
+        const url = `/posts/${ slug }/read`;
+        const { data } = await request({ url });
+        return data;
+    },
+    analyzePost: async (slug) => {
+        const url = `/posts/${ slug }/analyze`;
+        const { data } = await request({ url });
+        return data;
+    },
     createPost: async ({ post }) => {
         const url = `/posts`;
         const { data } = await request({ url, method: 'POST', data: post });
