@@ -87,6 +87,15 @@ export default {
         const { data } = await request({ url, method: 'POST', data: { email, password } });
         return data;
     },
+    faceLogin: async({ image }) => {
+        const url = `/auth/login-face`;
+        const { data } = await request({ url, method: 'POST', data: { image } });
+        return data;
+    },
+    addFace: async({ image }) => {
+        const url = `/auth/add-face`;
+        await request({ url, method: 'POST', data: { image } });
+    },
     register: async ({ email, password, name, surname }) => {
         const url = `/auth/`;
         const { data } = await request({ url, method: 'POST', data: { email, password, name, middle_name: surname } });

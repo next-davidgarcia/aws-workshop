@@ -57,6 +57,9 @@
                 }
             },
         },
+        mounted() {
+            this.loading(false);
+        },
         async asyncData ({ params }) {
             try {
                 const { posts, pages, total } = await api.getPosts();

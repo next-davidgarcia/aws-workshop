@@ -36,7 +36,8 @@ module.exports = {
 
   plugins: [
     // { ssr: true, src: '~plugins/vuetify.js' }
-    { src: '~/plugins/editor.js', ssr: 'true' }, // only on client side
+    { src: '~/plugins/editor.js', mode: 'client' }, // only on client side
+    { src: '~/plugins/camera.js', mode: 'client' }, // only on client side
   ],
 
   /*

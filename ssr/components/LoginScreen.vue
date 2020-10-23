@@ -17,15 +17,22 @@
                     @click:append="showPass = !showPass"
             ></v-text-field>
             <v-btn
-                    :disabled="!password || !email"
-                    color="primary"
-                    large
-                    type="submit">Acceder</v-btn>
+                :disabled="!password || !email"
+                color="primary"
+                large
+                type="submit">Acceder</v-btn>
+            <v-btn color="primary" large @click="tab = 'faceLogin'">Reconocimiento facial</v-btn>
             <div class="actionLink">
               <!--<span class="link" @click="toggle('remember')">Recordar Contraseña</span>-->
               <span class="link" @click="goTo('register')">Registrarme</span>
             </div>
           </v-form>
+          <div v-if="tab === 'faceLogin'">
+            <Camera :face="true" v-on:face="doFaceLogin"/>
+            <div class="actionLink">
+              <span class="link" @click="goTo('login')">Volver</span>
+            </div>
+          </div>
           <v-form ref="register" v-if="tab === 'register'" v-model="valid" lazy="true">
             <v-text-field
                     v-model="email"
@@ -81,9 +88,13 @@
 
 <script>
     import api from '~/lib/api';
+    import Camera from '@/components/Camera';
     import { mapActions } from 'vuex';
 
     export default {
+        components: {
+            Camera,
+        },
         data() {
             return {
                 email: '',
@@ -124,9 +135,20 @@
                     this.$refs.login.reset();
                     this.login({ token, user });
                     this.$emit('logged');
-                    this.loading(false);
                 } catch (e) {
                   this.alert(e.message);
+                    this.loading(false);
+                }
+            },
+            async doFaceLogin(image) {
+                try {
+                    this.loading(true);
+                    this.goTo('login');
+                    const { token, user } = await api.faceLogin({ image });
+                    this.login({ token, user });
+                    this.$emit('logged');
+                } catch (e) {
+                    this.alert(e.message);
                     this.loading(false);
                 }
             },

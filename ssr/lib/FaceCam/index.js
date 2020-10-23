@@ -1,4 +1,4 @@
-import * as l from './libs';
+import './libs';
 import Controller from './Controller';
 
 export default class FaceCam {

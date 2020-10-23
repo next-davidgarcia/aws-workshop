@@ -28,6 +28,9 @@
                     <v-btn @click="logout">
                       <v-icon>mdi-logout</v-icon>
                     </v-btn>
+                    <v-btn @click="register">
+                      <v-icon>mdi-face</v-icon>
+                    </v-btn>
                   </v-list-item-action>
                 </v-list-item>
               </v-list>
@@ -100,10 +103,9 @@
         },
         methods: {
             ...mapActions(['loading', 'logout', 'login']),
-            fb() {
-                this.login({ user: { name: 'pepe' }, token: '1245t' });
-                this.$forceUpdate();
-            },
+            register() {
+                this.$router.push({ path: '/register' });
+            }
         },
     }
 </script>
